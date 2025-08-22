@@ -1,0 +1,107 @@
+{
+  "name": "crackmate-copilot",
+  "version": "1.0.1",
+  "private": true,
+  "author": "CrackMate Team",
+  "description": "CrackMate: AI-powered coding and interview assistant.",
+  "main": "public/electron.js",
+  "homepage": "./",
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.1.1",
+    "@mui/material": "^7.1.1",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "axios": "^1.10.0",
+    "concurrently": "^9.1.2",
+    "electron-updater": "^5.3.0",
+    "express": "^5.1.0",
+    "firebase": "^12.0.0",
+    "html2canvas": "^1.4.1",
+    "lucide-react": "^0.517.0",
+    "mammoth": "^1.9.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "concurrently \"cross-env BROWSER=none PORT=3001 react-scripts start\" \"wait-on http://localhost:3001 && electron .\"",
+    "build": "react-scripts build",
+    "electron-dev": "electron .",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "pack": "electron-packager . CrackMate --platform=win32 --arch=x64 --out=dist --overwrite --icon=public/logo.ico --ignore=App.test.js --ignore=setupTests.js --ignore=reportWebVitals.js --ignore=node_modules/electron --ignore=dist",
+    "postinstall": "electron-builder install-app-deps || exit 0",
+    "dist": "npm run build && electron-builder --publish always"
+  },
+  "build": {
+    "productName": "CrackMate Copilot",
+    "asar": true,
+    "compression": "maximum",
+    "files": [
+      "build/**/*",
+      "public/electron.js",
+      "public/preload.js",
+      "public/logo.ico",
+      "public/assets/Logo.png",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "extraFiles": [
+      {
+        "from": ".env.production",
+        "to": "resources/.env.production"
+      }
+    ],
+    "win": {
+      "icon": "public/logo.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "CrackMate Copilot"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "crackmateai",
+        "repo": "CrackMate"
+      }
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "electron": "^36.4.0",
+    "electron-builder": "^26.0.12",
+    "electron-packager": "^17.1.2",
+    "wait-on": "^8.0.3"
+  }
+}
